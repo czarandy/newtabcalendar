@@ -28,6 +28,7 @@ body {
   --divider-color: #0001;
   --primary-text-shadow: 0 0 3px #fff2, 0 0 12px #fff4;
   --secondary-text-shadow: 0 0 3px #fff4;
+  background-image: url(./bg-light.jpg);
 }
 
 .overlayBackground {
@@ -73,11 +74,11 @@ img.icon {
    .overlayBackground {
     background-color: #202327;
   }
-  
+
   .divider {
     background: #5b5e61;
   }
-  
+
   .borderColor {
     border-color: #5b5e61;
   }

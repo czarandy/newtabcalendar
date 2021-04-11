@@ -1,6 +1,6 @@
 {
-  "name": "internal-new-tab",
-  "version": "3.0.6",
+  "name": "new-tab-calendar",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@types/chrome": "^0.0.134",

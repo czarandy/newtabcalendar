@@ -3,6 +3,7 @@ import useDateTime from './useDateTime';
 import styled from 'styled-components';
 import Time from './Time';
 import Calendar from './Calendar';
+import Weather from './Weather';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -48,9 +49,51 @@ export default function App() {
         <Time now={now} />
       </Header>
       <UpNextWrapper>
-        <Calendar
-        />
+        <Weather />
       </UpNextWrapper>
+      <button
+        onClick={() => {
+          chrome.identity.getAuthToken({ interactive: true }, function (token) {
+            const min = new Date();
+            const max = new Date();
+            max.setDate(max.getDate() + 1);
+            min.setDate(min.getDate() - 1);
+
+            const fetch_options = {
+              method: 'GET',
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
+            };
+
+            fetch(
+              'https://www.googleapis.com/calendar/v3/calendars/primary/events?' +
+              new URLSearchParams({
+                timeMin: min.toISOString(),
+                timeMax: max.toISOString(),
+              }),
+              fetch_options,
+            )
+              .then(response => response.json())
+              // Transform
+              // the
+              // data
+              // into
+              // json
+              .then(function (data) {
+                // get
+                // the
+                // events
+                //chrome.extension.getBackgroundPage().console.log(data);
+                alert('success');
+                console.log(data);
+              });
+          });
+        }}
+      >
+        foo
+        </button>
       {/*
       <UpNextWrapper>
         <UpNext event={upNext} />

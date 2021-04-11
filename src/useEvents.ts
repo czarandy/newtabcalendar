@@ -33,7 +33,7 @@ function parseEvent(event: any): Event | null {
 }
 
 function setLocalStorage(key: string, value: any): Promise<void> {
-  return new Promise(resolve => chrome.storage.local.set({ key: value }, resolve));
+  return new Promise(resolve => chrome.storage.local.set({ [key]: value }, resolve));
 }
 
 function getLocalStorage(key: string): Promise<any> {
