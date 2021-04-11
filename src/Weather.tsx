@@ -1,6 +1,6 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { DateTime } from 'luxon';
+import {useState, useEffect} from 'react';
+import {DateTime} from 'luxon';
 import styled from 'styled-components';
 
 const WeatherWrapper = styled.div`
@@ -88,7 +88,9 @@ function arrayMin(a: number[]): number {
 }
 
 function arrayMode(array: number[]): number | null {
-  if (array.length === 0) { return null; }
+  if (array.length === 0) {
+    return null;
+  }
   const modeMap = new Map();
   let maxEl = array[0];
   let maxCount = 1;
@@ -105,25 +107,30 @@ function arrayMode(array: number[]): number | null {
 }
 
 function setLocalStorage(key: string, value: any): Promise<void> {
-  return new Promise(resolve => chrome.storage.local.set({ [key]: value }, resolve));
+  return new Promise(resolve =>
+    chrome.storage.local.set({[key]: value}, resolve),
+  );
 }
 
 function getLocalStorage(key: string): Promise<any> {
-  return new Promise(resolve => chrome.storage.local.get([key], result => {
-    resolve(result[key]);
-  }));
+  return new Promise(resolve =>
+    chrome.storage.local.get([key], result => {
+      resolve(result[key]);
+    }),
+  );
 }
 
 function hashCode(str: string): string {
-  let hash = 0, i, chr;
+  let hash = 0,
+    i,
+    chr;
   for (i = 0; i < str.length; i++) {
     chr = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + chr;
+    hash = (hash << 5) - hash + chr;
     hash |= 0; // Convert to 32bit integer
   }
   return hash.toString();
 }
-
 
 const TIMEOUT = 3600;
 const KEY = 'newtab/weather/';
@@ -157,8 +164,12 @@ async function fetchJSON(url: string): Promise<any> {
 }
 
 async function fetchData(onChange: any, forceFetch = false) {
-  const [json, needsUpdateA] = await (forceFetch ? fetchJSON : fetchCached)('https://api.weather.gov/points/37.27,-121.9272');
-  const [forecast, needsUpdateB] = await (forceFetch ? fetchJSON : fetchCached)(json.properties.forecastHourly);
+  const [json, needsUpdateA] = await (forceFetch ? fetchJSON : fetchCached)(
+    'https://api.weather.gov/points/37.27,-121.9272',
+  );
+  const [forecast, needsUpdateB] = await (forceFetch ? fetchJSON : fetchCached)(
+    json.properties.forecastHourly,
+  );
   const now = DateTime.now();
   const periods = forecast.properties.periods;
   // group by day
@@ -177,24 +188,31 @@ async function fetchData(onChange: any, forceFetch = false) {
   // Get summary for each day
   onChange({
     rightNow,
-    days: days.slice(0, 5).map(day => {
-      if (DateTime.fromISO(day[0].startTime).toISODate() < now.toISODate()) {
-        return null;
-      }
-      const high = arrayMax(day.map((p: any) => p.temperature));
-      const low = arrayMin(day.map((p: any) => p.temperature));
-      const isToday =
-        DateTime.fromISO(day[0].startTime).toISODate() === now.toISODate();
-      const icon = arrayMode(
-        day.map((p: any) => getIcon(p.shortForecast, false)).filter(Boolean)
-      );
-      return {
-        low,
-        high,
-        icon,
-        label: isToday ? 'Today' : DateTime.fromISO(day[0].startTime).toLocaleString({ weekday: 'short' }),
-      };
-    }).filter(Boolean),
+    days: days
+      .slice(0, 5)
+      .map(day => {
+        if (DateTime.fromISO(day[0].startTime).toISODate() < now.toISODate()) {
+          return null;
+        }
+        const high = arrayMax(day.map((p: any) => p.temperature));
+        const low = arrayMin(day.map((p: any) => p.temperature));
+        const isToday =
+          DateTime.fromISO(day[0].startTime).toISODate() === now.toISODate();
+        const icon = arrayMode(
+          day.map((p: any) => getIcon(p.shortForecast, false)).filter(Boolean),
+        );
+        return {
+          low,
+          high,
+          icon,
+          label: isToday
+            ? 'Today'
+            : DateTime.fromISO(day[0].startTime).toLocaleString({
+                weekday: 'short',
+              }),
+        };
+      })
+      .filter(Boolean),
   });
   if (needsUpdateA || needsUpdateB) {
     fetchData(onChange, true);
@@ -209,15 +227,18 @@ export default function Weather() {
   if (data == null) {
     return null;
   }
-  const { rightNow, days } = data;
+  const {rightNow, days} = data;
   return (
     <WeatherWrapper>
       <WeatherToday>
         <WeatherTodayText>
           {rightNow.temperature + String.fromCharCode(176)}
         </WeatherTodayText>
-        <i className={'fal ' + getIcon(rightNow.shortForecast,
-          !rightNow.isDaytime)} />
+        <i
+          className={
+            'fal ' + getIcon(rightNow.shortForecast, !rightNow.isDaytime)
+          }
+        />
       </WeatherToday>
       <WeatherDaysWrapper>
         {days.map((day: any) => (

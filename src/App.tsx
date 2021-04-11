@@ -52,8 +52,9 @@ export default function App() {
         <Weather />
       </UpNextWrapper>
       <button
+        style={{display: 'none'}}
         onClick={() => {
-          chrome.identity.getAuthToken({ interactive: true }, function (token) {
+          chrome.identity.getAuthToken({interactive: true}, function (token) {
             const min = new Date();
             const max = new Date();
             max.setDate(max.getDate() + 1);
@@ -69,10 +70,10 @@ export default function App() {
 
             fetch(
               'https://www.googleapis.com/calendar/v3/calendars/primary/events?' +
-              new URLSearchParams({
-                timeMin: min.toISOString(),
-                timeMax: max.toISOString(),
-              }),
+                new URLSearchParams({
+                  timeMin: min.toISOString(),
+                  timeMax: max.toISOString(),
+                }),
               fetch_options,
             )
               .then(response => response.json())
@@ -90,10 +91,9 @@ export default function App() {
                 console.log(data);
               });
           });
-        }}
-      >
+        }}>
         foo
-        </button>
+      </button>
       {/*
       <UpNextWrapper>
         <UpNext event={upNext} />

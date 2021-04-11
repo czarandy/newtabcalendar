@@ -1,6 +1,6 @@
 import ical from 'ical.js';
-import { DateTime } from 'luxon';
-import { useEffect, useState } from 'react';
+import {DateTime} from 'luxon';
+import {useEffect, useState} from 'react';
 import useDateTime from './useDateTime';
 
 function parseEvent(event: any): Event | null {
@@ -33,15 +33,18 @@ function parseEvent(event: any): Event | null {
 }
 
 function setLocalStorage(key: string, value: any): Promise<void> {
-  return new Promise(resolve => chrome.storage.local.set({ [key]: value }, resolve));
+  return new Promise(resolve =>
+    chrome.storage.local.set({[key]: value}, resolve),
+  );
 }
 
 function getLocalStorage(key: string): Promise<any> {
-  return new Promise(resolve => chrome.storage.local.get([key], result => {
-    resolve(result[key]);
-  }));
+  return new Promise(resolve =>
+    chrome.storage.local.get([key], result => {
+      resolve(result[key]);
+    }),
+  );
 }
-
 
 const TIMEOUT = 60 * 60;
 const KEY = 'events/ical';
@@ -56,16 +59,16 @@ async function fetchEvents() {
 }
 
 type Event = {
-  start: DateTime,
-  end: DateTime,
-  summary: string,
-  description: string,
-  location: string,
+  start: DateTime;
+  end: DateTime;
+  summary: string;
+  description: string;
+  location: string;
 };
 
 type CachedValue = {
-  dt: DateTime,
-  events: Event[],
+  dt: DateTime;
+  events: Event[];
 };
 
 export default function useEvents(): Event[] {
@@ -93,7 +96,10 @@ export default function useEvents(): Event[] {
         }
       }
       // If we do have some data, possibly refetch it if it's old
-      if (cachedValue != null && now.diff(cachedValue.dt).as('seconds') > TIMEOUT) {
+      if (
+        cachedValue != null &&
+        now.diff(cachedValue.dt).as('seconds') > TIMEOUT
+      ) {
         fetchFromSource();
       }
     })();

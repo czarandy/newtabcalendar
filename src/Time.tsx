@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DateTime } from 'luxon';
-import type { DateTimeFormatOptions } from 'luxon';
+import {DateTime} from 'luxon';
+import type {DateTimeFormatOptions} from 'luxon';
 
 const PrimaryTimestamp = styled.div`
   color: var(--primary-color);
@@ -42,7 +42,7 @@ const DT_FORMAT: DateTimeFormatOptions = {
   year: 'numeric',
 };
 
-export default function Time({ now }: Props): JSX.Element {
+export default function Time({now}: Props): JSX.Element {
   const time = now.toLocaleString(DateTime.TIME_SIMPLE);
   const parts = time.split(' ');
   return (

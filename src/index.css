@@ -71,7 +71,7 @@ img.icon {
     --secondary-text-shadow: 0 0 3px #0004;
   }
 
-   .overlayBackground {
+  .overlayBackground {
     background-color: #202327;
   }
 
@@ -83,7 +83,3 @@ img.icon {
     border-color: #5b5e61;
   }
 }
-
-
-
-
