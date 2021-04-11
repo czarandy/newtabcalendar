@@ -11,5 +11,6 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "permissions": ["storage"]
+  "permissions": ["storage", "*://calendar.google.com/"],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA19eu89U3UtyPgMkSqZjd0pecrXzKmxao0OkKQRJNR0ujz2is+f3GhJpG8Ixksayd4rkton5KgAoHu/tay3/FsqTzVbYQw4Qp0c5hRWy/THAr0FSTiMVIkfwJPagpSdRyOwRCh+X3PvHDpebN/T5XZdmEYxG7BJlhBZtlMw6aZJWOGYoeFSbFvu8w+w2+qv749nogrEio2Q4O086vnopRAdbGt3UR1/Ea3jr0KeOAcKPka+YRg1ufgTbDYi5N0KCNP0bjOFhh3Nd99MlBwGnVC4TPu8fEyd5b3iRzyPrKzZUflpDMKO4+SSi8qgDUTEk47dKegH4Rwnu0xQd32t7pNQIDAQAB"
 }

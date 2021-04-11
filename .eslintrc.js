@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    webextensions: true,
   },
   extends: [
     'eslint:recommended',
@@ -25,7 +26,7 @@ module.exports = {
   plugins: ['react', 'react-hooks', '@typescript-eslint'],
   rules: {
     'react-hooks/exhaustive-deps': 'error',
-    indent: ['error', 2],
+    indent: ['warn', 2],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
   },

@@ -2,6 +2,7 @@ import React from 'react';
 import useDateTime from './useDateTime';
 import styled from 'styled-components';
 import Time from './Time';
+import Calendar from './Calendar';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -38,9 +39,6 @@ const UpNextWrapper = styled.div`
 function UpNext() {
   return null;
 }
-function Calendar() {
-  return null;
-}
 
 export default function App() {
   const now = useDateTime();
@@ -49,6 +47,10 @@ export default function App() {
       <Header>
         <Time now={now} />
       </Header>
+      <UpNextWrapper>
+        <Calendar
+        />
+      </UpNextWrapper>
       {/*
       <UpNextWrapper>
         <UpNext event={upNext} />
