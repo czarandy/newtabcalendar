@@ -1,5 +1,7 @@
+import React from 'react';
+import useDateTime from './useDateTime';
 import styled from 'styled-components';
-import { DateTime } from 'luxon';
+import Time from './Time';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -33,9 +35,6 @@ const UpNextWrapper = styled.div`
   margin-right: 36px;
 `;
 
-function Time() {
-  return null;
-}
 function UpNext() {
   return null;
 }
@@ -44,11 +43,13 @@ function Calendar() {
 }
 
 export default function App() {
+  const now = useDateTime();
   return (
     <Wrapper>
       <Header>
-        <Time now={this.state.now} />
+        <Time now={now} />
       </Header>
+      {/*
       <UpNextWrapper>
         <UpNext event={upNext} />
         <Calendar
@@ -66,11 +67,12 @@ export default function App() {
               {
                 customNow,
               },
-              this._update
+              this._update,
             );
           }}
         />
       </UpNextWrapper>
+        */}
     </Wrapper>
   );
 }

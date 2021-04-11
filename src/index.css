@@ -1,8 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: system-ui, -apple-system, 'SF Pro Display', 'Segoe UI',
-    sans-serif;
+  font-family: system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-attachment: fixed;
@@ -11,30 +10,79 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-color: #f0f0f0;
-  text-shadow: var(--secondary-text-shadow);
+  text-shadow: 0 0 3px #fff4;
   transition: background-image 0.5s linear;
 }
+
+/* Light Theme */
+
+body {
+  --overlay-background: #d0d0d0;
+  --highlight-background: #b9b9b9;
+  --icon-filter: brightness(0);
+  --black-icon-filter: invert(39%) sepia(21%) saturate(200%) saturate(109.5%)
+    hue-rotate(174deg) brightness(94%) contrast(86%);
+  --primary-color: #1c1e22;
+  --secondary-color: #5f6670;
+  --tertiary-color: #0006;
+  --divider-color: #0001;
+  --primary-text-shadow: 0 0 3px #fff2, 0 0 12px #fff4;
+  --secondary-text-shadow: 0 0 3px #fff4;
+}
+
+.overlayBackground {
+  background-color: #d0d0d0;
+}
+
+img.icon {
+  filter: brightness(0);
+}
+
+.overlayBackground.secondaryColor,
+.overlayBackground .secondaryColor {
+  color: #9fa0a1;
+}
+
+.divider {
+  background: #b8bcc0;
+}
+
+.borderColor {
+  border-color: #b8bcc0;
+}
+
+/* Dark Theme */
 
 @media (prefers-color-scheme: dark) {
   body {
     background-color: #404040;
+    text-shadow: 0 0 3px #0004;
+    --overlay-background: #202327;
+    --highlight-background: #0004;
+    --icon-filter: initial;
+    --black-icon-filter: invert(62%) sepia(98%) saturate(12%) hue-rotate(175deg)
+      brightness(90%) contrast(96%);
+    --primary-color: white;
+    --secondary-color: #fff9;
+    --tertiary-color: #fff6;
+    --divider-color: #fff1;
+    --primary-text-shadow: 0 0 3px #0002, 0 0 12px #0004;
+    --secondary-text-shadow: 0 0 3px #0004;
+  }
+
+   .overlayBackground {
+    background-color: #202327;
+  }
+  
+  .divider {
+    background: #5b5e61;
+  }
+  
+  .borderColor {
+    border-color: #5b5e61;
   }
 }
 
-body * {
-  visibility: hidden;
-}
-
-body.theme-light *,
-body.theme-dark * {
-  visibility: inherit;
-}
 
 
-body.theme-light {
-  background-color: #f0f0f0;
-}
 
-body.theme-dark {
-  background-color: #404040;
-}
