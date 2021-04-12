@@ -235,6 +235,7 @@ export default function Weather() {
           {rightNow.temperature + String.fromCharCode(176)}
         </WeatherTodayText>
         <i
+          style={{marginTop: '2px'}}
           className={
             'fal ' + getIcon(rightNow.shortForecast, !rightNow.isDaytime)
           }
