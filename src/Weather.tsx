@@ -53,6 +53,11 @@ const WeatherIcon = styled.div`
   font-size: 24px;
 `;
 
+const WeatherTodayIcon = styled.i`
+  margin-top: 2px;
+  width: 52px;
+`;
+
 function getIcon(forecast: string, isNight: boolean): string | null {
   switch (forecast) {
     case 'Haze':
@@ -237,8 +242,7 @@ export default function Weather() {
         <WeatherTodayText>
           {rightNow.temperature + String.fromCharCode(176)}
         </WeatherTodayText>
-        <i
-          style={{marginTop: '2px'}}
+        <WeatherTodayIcon
           className={
             'fal ' + getIcon(rightNow.shortForecast, !rightNow.isDaytime)
           }
