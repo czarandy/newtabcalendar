@@ -159,7 +159,10 @@ async function fetchCached(url: string): Promise<any> {
 
 async function fetchJSON(url: string): Promise<any> {
   const data = await fetch(url);
-  const json = await data.json();
+  const result = await data.text();
+  const key = KEY + hashCode(url);
+  await setLocalStorage(key, JSON.stringify({dt: +DateTime.now(), result}));
+  const json = JSON.parse(result);
   return [json, false];
 }
 
