@@ -178,6 +178,10 @@ async function fetchData(onChange: any, forceFetch = false) {
   const [forecast, needsUpdateB] = await (forceFetch ? fetchJSON : fetchCached)(
     json.properties.forecastHourly,
   );
+  if (!forecast.properties) {
+    fetchData(onChange, true);
+    return;
+  }
   const now = DateTime.now();
   const periods = forecast.properties.periods;
   // group by day
