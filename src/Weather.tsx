@@ -242,16 +242,18 @@ export default function Weather() {
   const {rightNow, days} = data;
   return (
     <WeatherWrapper>
-      <WeatherToday>
-        <WeatherTodayText>
-          {rightNow.temperature + String.fromCharCode(176)}
-        </WeatherTodayText>
-        <WeatherTodayIcon
-          className={
-            'fal ' + getIcon(rightNow.shortForecast, !rightNow.isDaytime)
-          }
-        />
-      </WeatherToday>
+      {rightNow ? (
+        <WeatherToday>
+          <WeatherTodayText>
+            {rightNow.temperature + String.fromCharCode(176)}
+          </WeatherTodayText>
+          <WeatherTodayIcon
+            className={
+              'fal ' + getIcon(rightNow.shortForecast, !rightNow.isDaytime)
+            }
+          />
+        </WeatherToday>
+      ) : null}
       <WeatherDaysWrapper>
         {days.map((day: any) => (
           <WeatherDay key={day.label}>
