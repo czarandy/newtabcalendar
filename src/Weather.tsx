@@ -4,27 +4,24 @@ import {DateTime} from 'luxon';
 import styled from 'styled-components';
 
 const WeatherWrapper = styled.div`
-  grid-column: 1;
-  grid-row: 3;
-  margin-left: 16px;
-  margin-right: 16px;
+  margin: 8px 16px;
   display: flex;
   justify-content: flex-end;
-  flex-direction: column;
+  flex-direction: row;
   margin-bottom: 16px;
 `;
 
 const WeatherToday = styled.div`
-  font-size: 52px;
-  margin-bottom: 2px;
+  font-size: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-right: 16px;
 `;
 
 const WeatherTodayText = styled.div`
   margin-right: 12px;
-  font-size: 72px;
+  font-size: 54px;
   margin-bottom: 6px;
 `;
 
@@ -41,11 +38,11 @@ const WeatherDay = styled.div`
 `;
 
 const WeatherTemp = styled.div`
-  font-size: 18px;
+  font-size: 16px;
 `;
 
 const WeatherLabel = styled.div`
-  font-size: 24px;
+  font-size: 18px;
 `;
 
 const WeatherIcon = styled.div`
@@ -201,7 +198,7 @@ async function fetchData(onChange: any, forceFetch = false) {
   onChange({
     rightNow,
     days: days
-      .slice(0, 5)
+      .slice(0, 4)
       .map(day => {
         if (DateTime.fromISO(day[0].startTime).toISODate() < now.toISODate()) {
           return null;
@@ -242,7 +239,7 @@ export default function Weather() {
   const {rightNow, days} = data;
   return (
     <WeatherWrapper>
-      {rightNow ? (
+      {false && rightNow ? (
         <WeatherToday>
           <WeatherTodayText>
             {rightNow.temperature + String.fromCharCode(176)}
@@ -255,6 +252,21 @@ export default function Weather() {
         </WeatherToday>
       ) : null}
       <WeatherDaysWrapper>
+        {rightNow ? (
+          <WeatherDay>
+            <WeatherLabel>Now</WeatherLabel>
+            <WeatherIcon>
+              <i
+                className={
+                  'fas ' + getIcon(rightNow.shortForecast, !rightNow.isDaytime)
+                }
+              />
+            </WeatherIcon>
+            <WeatherTemp>
+              {rightNow.temperature + String.fromCharCode(176)}
+            </WeatherTemp>
+          </WeatherDay>
+        ) : null}
         {days.map((day: any) => (
           <WeatherDay key={day.label}>
             <WeatherLabel>{day.label}</WeatherLabel>

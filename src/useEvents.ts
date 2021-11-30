@@ -1,35 +1,21 @@
-import ical from 'ical.js';
 import {DateTime} from 'luxon';
 import {useEffect, useState} from 'react';
 import useDateTime from './useDateTime';
 
-function parseEvent(event: any): Event | null {
-  const [type, props] = event;
-  if (type !== 'vevent') {
-    return null;
-  }
-  const result: any = {};
-  for (const prop of props) {
-    const [key, _, _type, value] = prop;
-    switch (key) {
-      case 'dtstart':
-        result.start = DateTime.fromISO(value);
-        break;
-      case 'dtend':
-        result.end = DateTime.fromISO(value);
-        break;
-      case 'description':
-        result.description = value;
-        break;
-      case 'summary':
-        result.summary = value;
-        break;
-      case 'location':
-        result.location = value;
-        break;
-    }
-  }
-  return result;
+export type Event = {
+  start: DateTime;
+  end: DateTime;
+  summary: string;
+  description: string;
+};
+
+function parseEvent(event: any): Event {
+  return {
+    start: DateTime.fromISO(event.start.dateTime),
+    end: DateTime.fromISO(event.end.dateTime),
+    description: event.description,
+    summary: event.summary,
+  };
 }
 
 function setLocalStorage(key: string, value: any): Promise<void> {
@@ -47,36 +33,49 @@ function getLocalStorage(key: string): Promise<any> {
 }
 
 const TIMEOUT = 60 * 60;
-const KEY = 'events/ical';
+const KEY = 'events/gcal';
 
-async function fetchEvents() {
-  const data = await fetch(
-    'https://calendar.google.com/calendar/ical/andy.goder%40gmail.com/private-bf8ba20f1c2fe22da6884d7270bfecd5/basic.ics',
-  );
-  const body = await data.text();
-  const parsed = ical.parse(body);
-  return parsed[2].map(parseEvent).filter(Boolean);
+async function fetchEvents(
+  token: string,
+  start: DateTime,
+  end: DateTime,
+): Promise<Event[]> {
+  return fetch(
+    'https://www.googleapis.com/calendar/v3/calendars/primary/events?' +
+      new URLSearchParams({
+        timeMin: start.toISO(),
+        timeMax: end.toISO(),
+      }),
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    },
+  )
+    .then(response => response.json())
+    .then(data => data.items.map(parseEvent));
 }
-
-type Event = {
-  start: DateTime;
-  end: DateTime;
-  summary: string;
-  description: string;
-  location: string;
-};
 
 type CachedValue = {
   dt: DateTime;
   events: Event[];
 };
 
-export default function useEvents(): Event[] {
+export default function useEvents(token: string | null): Event[] {
   const [cachedValue, setCachedValue] = useState<CachedValue | null>(null);
   const now = useDateTime();
   useEffect(() => {
     async function fetchFromSource() {
-      const events = await fetchEvents();
+      let events: Event[] = [];
+      if (token != null) {
+        events = await fetchEvents(
+          token,
+          now.startOf('week'),
+          now.endOf('week'),
+        );
+      }
       const value = {
         dt: now,
         events,
@@ -103,6 +102,6 @@ export default function useEvents(): Event[] {
         fetchFromSource();
       }
     })();
-  }, [cachedValue, now]);
+  }, [cachedValue, now, token]);
   return cachedValue == null ? [] : cachedValue.events;
 }

@@ -1,13 +1,29 @@
 import React from 'react';
+import Button from './Button';
+import useAuthToken from './useAuthToken';
 import useEvents from './useEvents';
+import WeeklyCalendar from './WeeklyCalendar';
 
 export default function Calendar(): JSX.Element | null {
+  const [tokenResult, updateToken] = useAuthToken();
+  const events = useEvents(tokenResult.token);
+  if (tokenResult.status === 'pending') {
+    return null;
+  }
+  if (tokenResult.token == null) {
+    return (
+      <Button
+        onClick={() =>
+          chrome.identity.getAuthToken({interactive: true}, updateToken)
+        }>
+        Connect To Google Calendar
+      </Button>
+    );
+  }
+  if (true) {
+    return <WeeklyCalendar events={events} />;
+  }
   return null;
-  /*
-  const events = useEvents();
-  console.log(events);
-  return <div>test</div>;
-  */
 }
 
 /*

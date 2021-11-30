@@ -24,32 +24,14 @@ body {
     hue-rotate(174deg) brightness(94%) contrast(86%);
   --primary-color: #1c1e22;
   --secondary-color: #5f6670;
+  --overlay-secondary-color: #9fa0a1;
   --tertiary-color: #0006;
   --divider-color: #0001;
+  --divider-background: #b8bcc0;
+  --border-color: #b8bcc0;
   --primary-text-shadow: 0 0 3px #fff2, 0 0 12px #fff4;
   --secondary-text-shadow: 0 0 3px #fff4;
   background-image: url(./bg-light.jpg);
-}
-
-.overlayBackground {
-  background-color: #d0d0d0;
-}
-
-img.icon {
-  filter: brightness(0);
-}
-
-.overlayBackground.secondaryColor,
-.overlayBackground .secondaryColor {
-  color: #9fa0a1;
-}
-
-.divider {
-  background: #b8bcc0;
-}
-
-.borderColor {
-  border-color: #b8bcc0;
 }
 
 /* Dark Theme */
@@ -67,19 +49,9 @@ img.icon {
     --secondary-color: #fff9;
     --tertiary-color: #fff6;
     --divider-color: #fff1;
+    --divider-background: #5b5e61;
+    --border-color: #5b5e61;
     --primary-text-shadow: 0 0 3px #0002, 0 0 12px #0004;
     --secondary-text-shadow: 0 0 3px #0004;
-  }
-
-  .overlayBackground {
-    background-color: #202327;
-  }
-
-  .divider {
-    background: #5b5e61;
-  }
-
-  .borderColor {
-    border-color: #5b5e61;
   }
 }
