@@ -20,10 +20,7 @@ export default function Calendar(): JSX.Element | null {
       </Button>
     );
   }
-  if (true) {
-    return <WeeklyCalendar events={events} />;
-  }
-  return null;
+  return <WeeklyCalendar events={events} />;
 }
 
 /*

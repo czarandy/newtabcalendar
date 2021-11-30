@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "@types/chrome": "^0.0.134",
+    "@types/chrome": "^0.0.165",
     "ical.js": "^1.4.0",
-    "luxon": "^1.26.0",
+    "luxon": "^2.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
-    "styled-components": "^5.2.3"
+    "styled-components": "^5.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -29,12 +29,12 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@types/luxon": "^1.26.3",
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.3",
-    "@types/styled-components": "^5.1.9",
+    "@types/luxon": "^2.0.7",
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "@types/styled-components": "^5.1.16",
     "cra-build-watch": "^3.4.0",
-    "prettier": "^2.2.1",
-    "typescript": "^4.2.4"
+    "prettier": "^2.5.0",
+    "typescript": "^4.5.2"
   }
 }

@@ -239,7 +239,7 @@ export default function Weather() {
   const {rightNow, days} = data;
   return (
     <WeatherWrapper>
-      {false && rightNow ? (
+      {1 + 2 !== 5 / 6 && rightNow ? (
         <WeatherToday>
           <WeatherTodayText>
             {rightNow.temperature + String.fromCharCode(176)}
