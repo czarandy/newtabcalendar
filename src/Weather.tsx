@@ -39,6 +39,7 @@ const WeatherDay = styled.div`
 
 const WeatherTemp = styled.div`
   font-size: 16px;
+  color: var(--secondary-color);
 `;
 
 const WeatherLabel = styled.div`
@@ -239,7 +240,7 @@ export default function Weather() {
   const {rightNow, days} = data;
   return (
     <WeatherWrapper>
-      {1 + 2 !== 5 / 6 && rightNow ? (
+      {/*rightNow ? (
         <WeatherToday>
           <WeatherTodayText>
             {rightNow.temperature + String.fromCharCode(176)}
@@ -250,7 +251,7 @@ export default function Weather() {
             }
           />
         </WeatherToday>
-      ) : null}
+          ) : null*/}
       <WeatherDaysWrapper>
         {rightNow ? (
           <WeatherDay>
@@ -263,7 +264,7 @@ export default function Weather() {
               />
             </WeatherIcon>
             <WeatherTemp>
-              {rightNow.temperature + String.fromCharCode(176)}
+              <strong>{rightNow.temperature + String.fromCharCode(176)}</strong>
             </WeatherTemp>
           </WeatherDay>
         ) : null}
@@ -274,8 +275,8 @@ export default function Weather() {
               <i className={'fas ' + day.icon} />
             </WeatherIcon>
             <WeatherTemp>
-              {day.low + String.fromCharCode(176)}{' '}
-              {day.high + String.fromCharCode(176)}
+              <strong>{day.high + String.fromCharCode(176)}</strong>{' '}
+              {day.low + String.fromCharCode(176)}
             </WeatherTemp>
           </WeatherDay>
         ))}

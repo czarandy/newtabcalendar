@@ -1,107 +1,74 @@
 import {DateTime} from 'luxon';
-import {useEffect, useState} from 'react';
-import useDateTime from './useDateTime';
+import {useCallback, useEffect, useState} from 'react';
+import fetchFromGoogle from './fetchFromGoogle';
+import useCachedData from './useCachedData';
+import {Calendar} from './useCalendars';
 
 export type Event = {
+  id: string;
   start: DateTime;
   end: DateTime;
   summary: string;
   description: string;
+  url: string;
+  isAllDay: boolean;
 };
 
-function parseEvent(event: any): Event {
+function parseEvent(event: any): Event | null {
+  if (event.status === 'cancelled' || !event.start || !event.end) {
+    return null;
+  }
+  const isAllDay = event.start.date != null;
   return {
-    start: DateTime.fromISO(event.start.dateTime),
-    end: DateTime.fromISO(event.end.dateTime),
+    id: event.id,
+    start: DateTime.fromISO(event.start.dateTime ?? event.start.date),
+    end: DateTime.fromISO(event.end.dateTime ?? event.end.date),
     description: event.description,
     summary: event.summary,
+    url: event.htmlLink,
+    isAllDay,
   };
 }
 
-function setLocalStorage(key: string, value: any): Promise<void> {
-  return new Promise(resolve =>
-    chrome.storage.local.set({[key]: value}, resolve),
-  );
-}
-
-function getLocalStorage(key: string): Promise<any> {
-  return new Promise(resolve =>
-    chrome.storage.local.get([key], result => {
-      resolve(result[key]);
-    }),
-  );
-}
-
-const TIMEOUT = 60 * 60;
-const KEY = 'events/gcal';
-
 async function fetchEvents(
   token: string,
+  calendar: Calendar,
   start: DateTime,
   end: DateTime,
 ): Promise<Event[]> {
-  return fetch(
-    'https://www.googleapis.com/calendar/v3/calendars/primary/events?' +
-      new URLSearchParams({
-        timeMin: start.toISO(),
-        timeMax: end.toISO(),
-      }),
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    },
-  )
-    .then(response => response.json())
-    .then(data => data.items.map(parseEvent));
+  return fetchFromGoogle(
+    token,
+    'calendars/' + calendar.id + '/events',
+    new URLSearchParams({
+      timeMin: start.toISO(),
+      timeMax: end.toISO(),
+    }),
+  ).then(data => data.items);
 }
 
-type CachedValue = {
-  dt: DateTime;
-  events: Event[];
-};
-
-export default function useEvents(token: string | null): Event[] {
-  const [cachedValue, setCachedValue] = useState<CachedValue | null>(null);
-  const now = useDateTime();
-  useEffect(() => {
-    async function fetchFromSource() {
-      let events: Event[] = [];
-      if (token != null) {
-        events = await fetchEvents(
-          token,
-          now.startOf('week'),
-          now.endOf('week'),
-        );
-      }
-      const value = {
-        dt: now,
-        events,
-      };
-      setCachedValue(value);
-      await setLocalStorage(KEY, value);
+export default function useEvents(
+  token: string | null,
+  calendars: Calendar[],
+  selectedTime: DateTime,
+): Event[] {
+  const fetch = useCallback((): Promise<Event[]> => {
+    if (token != null) {
+      return Promise.all(
+        calendars.map(calendar =>
+          fetchEvents(
+            token,
+            calendar,
+            selectedTime.startOf('week'),
+            selectedTime.endOf('week'),
+          ),
+        ),
+      ).then(result => result.flat().filter(Boolean));
     }
-
-    (async function () {
-      // If no data yet, simply get it from local storage
-      if (cachedValue == null) {
-        const result = await getLocalStorage(KEY);
-        if (!result) {
-          await fetchFromSource();
-        } else {
-          setCachedValue(result);
-        }
-      }
-      // If we do have some data, possibly refetch it if it's old
-      if (
-        cachedValue != null &&
-        now.diff(cachedValue.dt).as('seconds') > TIMEOUT
-      ) {
-        fetchFromSource();
-      }
-    })();
-  }, [cachedValue, now, token]);
-  return cachedValue == null ? [] : cachedValue.events;
+    return Promise.resolve([]);
+  }, [token, calendars, selectedTime]);
+  const data = useCachedData('events/gcal/v12', [], fetch);
+  return data
+    .map(parseEvent)
+    .filter((x): x is Event => x !== null)
+    .sort((a, b) => a.start.toMillis() - b.start.toMillis());
 }

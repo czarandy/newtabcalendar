@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
+    "@tippyjs/react": "^4.2.6",
     "@types/chrome": "^0.0.165",
     "ical.js": "^1.4.0",
     "luxon": "^2.1.1",

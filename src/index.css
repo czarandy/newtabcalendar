@@ -55,3 +55,17 @@ body {
     --secondary-text-shadow: 0 0 3px #0004;
   }
 }
+
+/* Tippy Overrides */
+
+.tippy-reset.tippy-box {
+  background: unset;
+}
+
+.tippy-reset .tippy-content {
+  padding: 0;
+}
+
+.tippy-reset .tippy-arrow {
+  color: #ffffff5f;
+}

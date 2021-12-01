@@ -5,7 +5,6 @@ import type {DateTimeFormatOptions} from 'luxon';
 
 const PrimaryTimestamp = styled.div`
   color: var(--primary-color);
-  margin-top: 40px;
   font-size: 144px;
   font-weight: 100;
   position: relative;

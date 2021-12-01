@@ -1,12 +1,16 @@
-import React from 'react';
+import {DateTime} from 'luxon';
+import React, {useState} from 'react';
 import Button from './Button';
 import useAuthToken from './useAuthToken';
+import useCalendars from './useCalendars';
 import useEvents from './useEvents';
 import WeeklyCalendar from './WeeklyCalendar';
 
 export default function Calendar(): JSX.Element | null {
+  const [selectedTime, setSelectedTime] = useState<DateTime>(DateTime.now());
   const [tokenResult, updateToken] = useAuthToken();
-  const events = useEvents(tokenResult.token);
+  const calendars = useCalendars(tokenResult.token);
+  const events = useEvents(tokenResult.token, calendars, selectedTime);
   if (tokenResult.status === 'pending') {
     return null;
   }
@@ -20,7 +24,13 @@ export default function Calendar(): JSX.Element | null {
       </Button>
     );
   }
-  return <WeeklyCalendar events={events} />;
+  return (
+    <WeeklyCalendar
+      events={events}
+      selectedTime={selectedTime}
+      setSelectedTime={setSelectedTime}
+    />
+  );
 }
 
 /*
