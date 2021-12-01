@@ -9,7 +9,7 @@ async function gen(key: string): Promise<string> {
   return items[key];
 }
 
-function genSetObject(obj: {}): Promise<void> {
+function genSetObject(obj: any): Promise<void> {
   return new Promise(resolve => chrome.storage.sync.set(obj, resolve));
 }
 
@@ -33,8 +33,8 @@ export default function useSyncedState<T>(
       ),
     );
     chrome.storage.onChanged.addListener(function (changes, namespace) {
-      for (let k in changes) {
-        let storageChange = changes[key];
+      for (const k in changes) {
+        const storageChange = changes[key];
         if (
           k === key &&
           storageChange.newValue !== value &&
@@ -44,6 +44,7 @@ export default function useSyncedState<T>(
         }
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
   const setValueWrapper = useCallback(

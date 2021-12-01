@@ -1,9 +1,6 @@
 import {DateTime} from 'luxon';
 
-export default function getLeftPercent(
-  date: DateTime,
-  fullDay: boolean = true,
-): number {
+export default function getLeftPercent(date: DateTime, fullDay = true): number {
   const LENGTH = (fullDay ? 24 : 12) * 3600;
   let startOfDay = date.startOf('day');
   if (!fullDay) {

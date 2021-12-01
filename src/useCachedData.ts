@@ -57,6 +57,6 @@ export default function useCachedData<T>(
         }
       }
     })();
-  }, [cachedValue, now, fetch, key]);
+  }, [cachedValue, now, fetch, key, timeout]);
   return cachedValue == null ? defaultValue : cachedValue.data;
 }

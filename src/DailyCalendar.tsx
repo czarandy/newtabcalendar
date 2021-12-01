@@ -120,7 +120,7 @@ export default function DailyCalendar({
   let events: any[] = [];
   let lastEventEnd: number | null = null;
   let columns: any[] = [];
-  for (let event of eventsFromProps.filter(event =>
+  for (const event of eventsFromProps.filter(event =>
     event.start.hasSame(selectedTime, 'day'),
   )) {
     if (lastEventEnd != null && event.start.toMillis() >= lastEventEnd) {
