@@ -5,7 +5,7 @@ import getLeftPercent from './getLeftPercent';
 const CurrentTimeLine = styled.div`
   background: #d68d4a;
   width: 2px;
-  height: 90px;
+  height: 120px;
   position: absolute;
   pointer-events: none;
 `;

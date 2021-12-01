@@ -8,7 +8,7 @@ import Hour from './Hour';
 import EventElement from './Event';
 
 const CalendarWrapper = styled.div`
-  height: 90px;
+  height: 120px;
   bottom: 15%;
   display: flex;
   justify-content: center;
@@ -88,8 +88,8 @@ function _packEvents(columns: any[]): any {
           key={event.id}
           event={event}
           isFullDay={false}
-          top={(row / columns.length) * 45 + (row > 0 ? 1 : 0)}
-          height={45 / columns.length - (row < columns.length - 1 ? 1 : 0)}
+          top={(row / columns.length) * 75 + (row > 0 ? 1 : 0)}
+          height={75 / columns.length - (row < columns.length - 1 ? 1 : 0)}
         />,
       );
     });
