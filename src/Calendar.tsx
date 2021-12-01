@@ -3,14 +3,21 @@ import React, {useState} from 'react';
 import Button from './Button';
 import useAuthToken from './useAuthToken';
 import useCalendars from './useCalendars';
+import {useCalendarSettings} from './useCalendarSettings';
 import useEvents from './useEvents';
 import WeeklyCalendar from './WeeklyCalendar';
 
 export default function Calendar(): JSX.Element | null {
+  const [calendarSettings, _] = useCalendarSettings();
   const [selectedTime, setSelectedTime] = useState<DateTime>(DateTime.now());
   const [tokenResult, updateToken] = useAuthToken();
-  const calendars = useCalendars(tokenResult.token);
+  const calendars = useCalendars(tokenResult.token).filter(
+    cal => !calendarSettings.disabledCalendars.includes(cal.id),
+  );
   const events = useEvents(tokenResult.token, calendars, selectedTime);
+  if (!calendarSettings.enabled) {
+    return null;
+  }
   if (tokenResult.status === 'pending') {
     return null;
   }

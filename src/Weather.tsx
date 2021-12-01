@@ -2,6 +2,7 @@ import React from 'react';
 import {useState, useEffect} from 'react';
 import {DateTime} from 'luxon';
 import styled from 'styled-components';
+import {useWeatherSettings} from './useWeatherSettings';
 
 const WeatherWrapper = styled.div`
   margin: 8px 16px;
@@ -230,11 +231,15 @@ async function fetchData(onChange: any, forceFetch = false) {
 }
 
 export default function Weather() {
+  const [weatherSettings, _] = useWeatherSettings();
   const [data, setData] = useState<any>(null);
   useEffect(() => {
     fetchData(setData);
   }, []);
   if (data == null) {
+    return null;
+  }
+  if (!weatherSettings.enabled) {
     return null;
   }
   const {rightNow, days} = data;

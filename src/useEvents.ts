@@ -3,9 +3,11 @@ import {useCallback, useEffect, useState} from 'react';
 import fetchFromGoogle from './fetchFromGoogle';
 import useCachedData from './useCachedData';
 import {Calendar} from './useCalendars';
+import hash from 'object-hash';
 
 export type Event = {
   id: string;
+  calendarID: string;
   start: DateTime;
   end: DateTime;
   summary: string;
@@ -21,6 +23,7 @@ function parseEvent(event: any): Event | null {
   const isAllDay = event.start.date != null;
   return {
     id: event.id,
+    calendarID: event.calendarID,
     start: DateTime.fromISO(event.start.dateTime ?? event.start.date),
     end: DateTime.fromISO(event.end.dateTime ?? event.end.date),
     description: event.description,
@@ -28,6 +31,16 @@ function parseEvent(event: any): Event | null {
     url: event.htmlLink,
     isAllDay,
   };
+}
+
+function hashCode(s: string): number {
+  let hash = 0;
+  for (let i = 0; i < s.length; i++) {
+    const character = s.charCodeAt(i);
+    hash = (hash << 5) - hash + character;
+    hash = hash & hash;
+  }
+  return hash;
 }
 
 async function fetchEvents(
@@ -60,15 +73,25 @@ export default function useEvents(
             calendar,
             selectedTime.startOf('week'),
             selectedTime.endOf('week'),
+          ).then(events =>
+            events.map(event => ({...event, calendarID: calendar.id})),
           ),
         ),
       ).then(result => result.flat().filter(Boolean));
     }
     return Promise.resolve([]);
   }, [token, calendars, selectedTime]);
-  const data = useCachedData('events/gcal/v12', [], fetch);
+  const data = useCachedData(
+    'events/gcal/v2/' +
+      hash({
+        st: selectedTime.toMillis(),
+        calendars: calendars.map(cal => cal.id),
+      }),
+    [],
+    fetch,
+  );
   return data
     .map(parseEvent)
-    .filter((x): x is Event => x !== null)
+    .filter((x): x is Event => x != null)
     .sort((a, b) => a.start.toMillis() - b.start.toMillis());
 }

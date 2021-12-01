@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "New Tab Calendar",
   "version": "1.0.0",
-  "minimum_chrome_version": "43",
+  "minimum_chrome_version": "96",
   "description": "Customized the new tab experience to show a calendar",
   "chrome_url_overrides": {"newtab": "index.html"},
   "icons": {

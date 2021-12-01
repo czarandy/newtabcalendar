@@ -7,6 +7,7 @@
     "@types/chrome": "^0.0.165",
     "ical.js": "^1.4.0",
     "luxon": "^2.1.1",
+    "object-hash": "^2.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3",
@@ -31,6 +32,7 @@
   ],
   "devDependencies": {
     "@types/luxon": "^2.0.7",
+    "@types/object-hash": "^2.2.1",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@types/styled-components": "^5.1.16",

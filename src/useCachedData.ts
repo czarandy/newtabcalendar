@@ -1,5 +1,5 @@
 import {DateTime} from 'luxon';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import useDateTime from './useDateTime';
 
 function setLocalStorage(key: string, value: any): Promise<void> {
@@ -18,6 +18,7 @@ function getLocalStorage(key: string): Promise<any> {
 
 type CachedValue<T> = {
   dt: DateTime;
+  key: string;
   data: T;
 };
 
@@ -34,6 +35,7 @@ export default function useCachedData<T>(
       const data = await fetch();
       const value: CachedValue<T> = {
         dt: now,
+        key,
         data,
       };
       setCachedValue(value);
@@ -50,14 +52,15 @@ export default function useCachedData<T>(
           setCachedValue(result);
         }
       }
-      // If we do have some data, possibly refetch it if it's old
+      // If we do have some data, possibly refetch it if it's old or the key has been updated
       if (
         cachedValue != null &&
-        now.diff(cachedValue.dt).as('seconds') > timeout
+        (now.diff(cachedValue.dt).as('seconds') > timeout ||
+          cachedValue.key !== key)
       ) {
         fetchFromSource();
       }
     })();
-  }, [cachedValue, now, fetch]);
+  }, [cachedValue, now, fetch, key]);
   return cachedValue == null ? defaultValue : cachedValue.data;
 }

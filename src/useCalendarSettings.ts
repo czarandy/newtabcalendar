@@ -1,11 +1,13 @@
 import useSyncedState from './useSyncedState';
 
 type CalendarSettings = {
-  mode: 'disabled' | 'weekly' | 'daily';
+  enabled: boolean;
+  mode: 'weekly' | 'daily';
   disabledCalendars: string[];
 };
 
 const DEFAULT: CalendarSettings = {
+  enabled: true,
   mode: 'weekly',
   disabledCalendars: [],
 };
