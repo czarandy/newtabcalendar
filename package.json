@@ -10,6 +10,7 @@
     "object-hash": "^2.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-linkify": "^1.0.0-alpha",
     "react-scripts": "^4.0.3",
     "styled-components": "^5.3.3"
   },
@@ -35,6 +36,7 @@
     "@types/object-hash": "^2.2.1",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "@types/react-linkify": "^1.0.1",
     "@types/styled-components": "^5.1.16",
     "cra-build-watch": "^3.4.0",
     "prettier": "^2.5.0",

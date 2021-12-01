@@ -8,7 +8,7 @@ type CalendarSettings = {
 
 const DEFAULT: CalendarSettings = {
   enabled: true,
-  mode: 'weekly',
+  mode: 'daily',
   disabledCalendars: [],
 };
 

@@ -1,8 +1,10 @@
 import {DateTime, Info} from 'luxon';
 import React from 'react';
 import styled from 'styled-components';
+import EventPopover from './EventPopover';
 import useDateTime from './useDateTime';
 import type {Event} from './useEvents';
+import Tippy from '@tippyjs/react';
 
 const Wrapper = styled.div`
   display: grid;
@@ -39,6 +41,7 @@ const EventLink = styled.a`
   &:hover {
     text-decoration: underline;
   }
+  word-break: break-word;
 `;
 
 const DAYS = Info.weekdays();
@@ -69,7 +72,13 @@ export default function WeeklyCalendar({
                 <DayEventTime>All Day</DayEventTime>
                 {allDayEvents.map(event => (
                   <DayEvent key={event.id}>
-                    <EventLink href={event.url}>{event.summary}</EventLink>
+                    <Tippy
+                      className="tippy-reset"
+                      content={<EventPopover event={event} />}
+                      placement="top"
+                      interactive={true}>
+                      <EventLink href={event.url}>{event.summary}</EventLink>
+                    </Tippy>
                   </DayEvent>
                 ))}
               </>
@@ -80,8 +89,14 @@ export default function WeeklyCalendar({
                   {event.start.toLocaleString(DateTime.TIME_SIMPLE)}
                   {' - '}
                   {event.end.toLocaleString(DateTime.TIME_SIMPLE)}
-                </DayEventTime>
-                <EventLink href={event.url}> {event.summary}</EventLink>
+                </DayEventTime>{' '}
+                <Tippy
+                  className="tippy-reset"
+                  content={<EventPopover event={event} />}
+                  placement="top"
+                  interactive={true}>
+                  <EventLink href={event.url}> {event.summary}</EventLink>
+                </Tippy>
               </DayEvent>
             ))}
           </Day>

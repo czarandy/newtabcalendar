@@ -11,7 +11,7 @@
     "48": "icon48.png",
     "128": "icon128.png"
   },
-  "permissions": ["storage", "identity", "*://calendar.google.com/"],
+  "permissions": ["storage", "identity"],
   "oauth2": {
     "client_id": "464344344205-nltetpvh575i0mvlpbiik73bmjgd5pgp.apps.googleusercontent.com",
     "scopes": ["https://www.googleapis.com/auth/calendar.readonly"]

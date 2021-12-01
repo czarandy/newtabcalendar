@@ -45,7 +45,7 @@ const UpNextWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   padding-bottom: 32px;
-  justify-content: start;
+  justify-content: center;
 `;
 
 function UpNext() {

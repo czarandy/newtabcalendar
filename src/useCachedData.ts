@@ -44,21 +44,17 @@ export default function useCachedData<T>(
 
     (async function () {
       // If no data yet, simply get it from local storage
-      if (cachedValue == null) {
+      if (
+        cachedValue == null ||
+        cachedValue.key !== key ||
+        now.diff(cachedValue.dt).as('seconds') > timeout
+      ) {
         const result = await getLocalStorage(key);
-        if (!result) {
+        if (!result || now.diff(result.dt).as('seconds') > timeout) {
           await fetchFromSource();
         } else {
           setCachedValue(result);
         }
-      }
-      // If we do have some data, possibly refetch it if it's old or the key has been updated
-      if (
-        cachedValue != null &&
-        (now.diff(cachedValue.dt).as('seconds') > timeout ||
-          cachedValue.key !== key)
-      ) {
-        fetchFromSource();
       }
     })();
   }, [cachedValue, now, fetch, key]);

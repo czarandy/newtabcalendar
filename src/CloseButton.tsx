@@ -4,8 +4,9 @@ const Button = styled.button`
   border: 0;
   background: none;
   cursor: pointer;
-
+  padding: 4px;
   opacity: 0.8;
+  filter: var(--black-icon-filter);
   :hover {
     opacity: 1;
   }

@@ -8,6 +8,7 @@ import hash from 'object-hash';
 export type Event = {
   id: string;
   calendarID: string;
+  backgroundColor: string;
   start: DateTime;
   end: DateTime;
   summary: string;
@@ -24,6 +25,7 @@ function parseEvent(event: any): Event | null {
   return {
     id: event.id,
     calendarID: event.calendarID,
+    backgroundColor: event.backgroundColor,
     start: DateTime.fromISO(event.start.dateTime ?? event.start.date),
     end: DateTime.fromISO(event.end.dateTime ?? event.end.date),
     description: event.description,
@@ -31,16 +33,6 @@ function parseEvent(event: any): Event | null {
     url: event.htmlLink,
     isAllDay,
   };
-}
-
-function hashCode(s: string): number {
-  let hash = 0;
-  for (let i = 0; i < s.length; i++) {
-    const character = s.charCodeAt(i);
-    hash = (hash << 5) - hash + character;
-    hash = hash & hash;
-  }
-  return hash;
 }
 
 async function fetchEvents(
@@ -55,6 +47,7 @@ async function fetchEvents(
     new URLSearchParams({
       timeMin: start.toISO(),
       timeMax: end.toISO(),
+      singleEvents: 'true',
     }),
   ).then(data => data.items);
 }
@@ -74,7 +67,11 @@ export default function useEvents(
             selectedTime.startOf('week'),
             selectedTime.endOf('week'),
           ).then(events =>
-            events.map(event => ({...event, calendarID: calendar.id})),
+            (events ?? []).map(event => ({
+              ...event,
+              calendarID: calendar.id,
+              backgroundColor: calendar.backgroundColor,
+            })),
           ),
         ),
       ).then(result => result.flat().filter(Boolean));
@@ -82,9 +79,9 @@ export default function useEvents(
     return Promise.resolve([]);
   }, [token, calendars, selectedTime]);
   const data = useCachedData(
-    'events/gcal/v2/' +
+    'events/gcal/v5/' +
       hash({
-        st: selectedTime.toMillis(),
+        st: selectedTime.startOf('day').toMillis(),
         calendars: calendars.map(cal => cal.id),
       }),
     [],
