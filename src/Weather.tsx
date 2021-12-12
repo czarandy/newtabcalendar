@@ -231,6 +231,7 @@ async function fetchData(onChange: any, forceFetch = false) {
           low,
           high,
           icon,
+          iconLabel,
           label: isToday
             ? 'Today'
             : DateTime.fromISO(day[0].startTime).toLocaleString({
@@ -281,13 +282,16 @@ export default function Weather() {
         {rightNow ? (
           <WeatherDay>
             <WeatherLabel>Now</WeatherLabel>
-            <WeatherIcon>
-              <i
-                className={
-                  'fas ' + getIcon(rightNow.shortForecast, !rightNow.isDaytime)
-                }
-              />
-            </WeatherIcon>
+            <Tippy placement="bottom" content={rightNow.shortForecast}>
+              <WeatherIcon>
+                <i
+                  className={
+                    'fas ' +
+                    getIcon(rightNow.shortForecast, !rightNow.isDaytime)
+                  }
+                />
+              </WeatherIcon>
+            </Tippy>
             <WeatherTemp>
               <strong>{rightNow.temperature + String.fromCharCode(176)}</strong>
             </WeatherTemp>
@@ -296,10 +300,7 @@ export default function Weather() {
         {days.map((day: any) => (
           <WeatherDay key={day.label}>
             <WeatherLabel>{day.label}</WeatherLabel>
-            <Tippy
-              className="tippy-reset"
-              placement="bottom"
-              content={day.iconLabel}>
+            <Tippy placement="bottom" content={day.iconLabel}>
               <WeatherIcon>
                 <i className={'fas ' + day.icon} />
               </WeatherIcon>
