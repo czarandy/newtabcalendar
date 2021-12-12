@@ -1,4 +1,3 @@
-import React from 'react';
 import useDateTime from './useDateTime';
 import styled from 'styled-components';
 import Time from './Time';
@@ -48,11 +47,7 @@ const UpNextWrapper = styled.div`
   justify-content: center;
 `;
 
-function UpNext() {
-  return null;
-}
-
-export default function App() {
+export default function App(): React.ReactElement {
   const now = useDateTime();
   return (
     <Wrapper>

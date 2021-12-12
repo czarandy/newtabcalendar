@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import {DateTime} from 'luxon';
+import Tippy from '@tippyjs/react';
 import styled from 'styled-components';
 import {useWeatherSettings} from './useWeatherSettings';
 
@@ -79,15 +80,16 @@ function getIcon(forecast: string, isNight: boolean): string | null {
       return isNight ? 'fa-moon' : 'fa-sun';
     case 'Rain':
     case 'Rain Likely':
-      return 'raindrops';
+      return 'fa-raindrops';
     case 'Light Rain':
     case 'Chance Light Rain':
     case 'Slight Chance Light Rain':
       return isNight ? 'fa-cloud-moon-rain' : 'fa-cloud-sun-rain';
     case 'Showers And Thunderstorms':
     case 'Showers And Thunderstorms Likely':
-    return 'fa-thunderstorm';
+      return 'fa-thunderstorm';
     default:
+      console.warn('Unknown forecast: ', forecast);
       return null;
   }
   return null;
@@ -222,6 +224,9 @@ async function fetchData(onChange: any, forceFetch = false) {
         const icon = arrayMode(
           day.map((p: any) => getIcon(p.shortForecast, false)).filter(Boolean),
         );
+        const iconLabel = arrayMode(
+          day.map((p: any) => p.shortForecast).filter(Boolean),
+        );
         return {
           low,
           high,
@@ -291,9 +296,14 @@ export default function Weather() {
         {days.map((day: any) => (
           <WeatherDay key={day.label}>
             <WeatherLabel>{day.label}</WeatherLabel>
-            <WeatherIcon>
-              <i className={'fas ' + day.icon} />
-            </WeatherIcon>
+            <Tippy
+              className="tippy-reset"
+              placement="bottom"
+              content={day.iconLabel}>
+              <WeatherIcon>
+                <i className={'fas ' + day.icon} />
+              </WeatherIcon>
+            </Tippy>
             <WeatherTemp>
               <strong>{day.high + String.fromCharCode(176)}</strong>{' '}
               {day.low + String.fromCharCode(176)}
