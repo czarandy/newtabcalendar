@@ -77,6 +77,16 @@ function getIcon(forecast: string, isNight: boolean): string | null {
       return 'fa-cloud';
     case 'Clear':
       return isNight ? 'fa-moon' : 'fa-sun';
+    case 'Rain':
+    case 'Rain Likely':
+      return 'raindrops';
+    case 'Light Rain':
+    case 'Chance Light Rain':
+    case 'Slight Chance Light Rain':
+      return isNight ? 'fa-cloud-moon-rain' : 'fa-cloud-sun-rain';
+    case 'Showers And Thunderstorms':
+    case 'Showers And Thunderstorms Likely':
+    return 'fa-thunderstorm';
     default:
       return null;
   }
@@ -230,6 +240,11 @@ async function fetchData(onChange: any, forceFetch = false) {
   }
 }
 
+const Placeholder = styled.div`
+  height: 85px;
+  width: 300px;
+`;
+
 export default function Weather() {
   const [weatherSettings, _] = useWeatherSettings();
   const [data, setData] = useState<any>(null);
@@ -237,10 +252,10 @@ export default function Weather() {
     fetchData(setData);
   }, []);
   if (data == null) {
-    return null;
+    return <Placeholder />;
   }
   if (!weatherSettings.enabled) {
-    return null;
+    return <Placeholder />;
   }
   const {rightNow, days} = data;
   return (

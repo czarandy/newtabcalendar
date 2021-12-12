@@ -9,7 +9,7 @@ const HourCell = styled.div`
 const Divider = styled.div`
   background: var(--border-color);
   width: 1px;
-  height: 70px;
+  height: 100px;
 `;
 
 const HourDiv = styled.div<{primaryColor: boolean}>`

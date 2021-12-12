@@ -31,6 +31,13 @@ const Description = styled.div`
   margin: 8px 0;
   max-height: 150px;
   font-size: 12px;
+  a {
+    text-decoration: none;
+    color: var(--primary-color);
+  }
+  a:hover {
+    text-decoration: underline;
+  }
 `;
 
 const TitleLink = styled.a`

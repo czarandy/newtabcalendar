@@ -83,6 +83,7 @@ export default function useEvents(
       hash({
         st: selectedTime.startOf('day').toMillis(),
         calendars: calendars.map(cal => cal.id),
+        token,
       }),
     [],
     fetch,

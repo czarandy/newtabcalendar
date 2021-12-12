@@ -13,7 +13,7 @@
   },
   "permissions": ["storage", "identity"],
   "oauth2": {
-    "client_id": "464344344205-nltetpvh575i0mvlpbiik73bmjgd5pgp.apps.googleusercontent.com",
+    "client_id": "464344344205-hq5p3tbfp5dt9dol12e6a9v2b3mm2eh8.apps.googleusercontent.com",
     "scopes": ["https://www.googleapis.com/auth/calendar.readonly"]
   },
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA19eu89U3UtyPgMkSqZjd0pecrXzKmxao0OkKQRJNR0ujz2is+f3GhJpG8Ixksayd4rkton5KgAoHu/tay3/FsqTzVbYQw4Qp0c5hRWy/THAr0FSTiMVIkfwJPagpSdRyOwRCh+X3PvHDpebN/T5XZdmEYxG7BJlhBZtlMw6aZJWOGYoeFSbFvu8w+w2+qv749nogrEio2Q4O086vnopRAdbGt3UR1/Ea3jr0KeOAcKPka+YRg1ufgTbDYi5N0KCNP0bjOFhh3Nd99MlBwGnVC4TPu8fEyd5b3iRzyPrKzZUflpDMKO4+SSi8qgDUTEk47dKegH4Rwnu0xQd32t7pNQIDAQAB"

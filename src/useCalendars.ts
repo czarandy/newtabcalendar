@@ -1,7 +1,7 @@
-import {DateTime} from 'luxon';
 import {useCallback} from 'react';
 import fetchFromGoogle from './fetchFromGoogle';
 import useCachedData from './useCachedData';
+import hash from 'object-hash';
 
 export type Calendar = {
   id: string;
@@ -24,5 +24,5 @@ export default function useCalendars(token: string | null): Calendar[] {
     }
     return Promise.resolve([]);
   }, [token]);
-  return useCachedData('calendars/gcal/v2', [], fetch);
+  return useCachedData('calendars/gcal/v2/' + hash({token}), [], fetch);
 }

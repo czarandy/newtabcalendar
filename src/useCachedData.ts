@@ -51,6 +51,10 @@ export default function useCachedData<T>(
       ) {
         const result = await getLocalStorage(key);
         if (!result || now.diff(result.dt).as('seconds') > timeout) {
+          if (result) {
+            // Use the old value for now, while refetching
+            setCachedValue(result);
+          }
           await fetchFromSource();
         } else {
           setCachedValue(result);
