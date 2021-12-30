@@ -1,6 +1,7 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
+
 import {DateTime} from 'luxon';
+import React from 'react';
 import Tippy from '@tippyjs/react';
 import styled from 'styled-components';
 import {useWeatherSettings} from './useWeatherSettings';
@@ -88,6 +89,10 @@ function getIcon(forecast: string, isNight: boolean): string | null {
     case 'Showers And Thunderstorms':
     case 'Showers And Thunderstorms Likely':
       return 'fa-thunderstorm';
+    case 'Patchy Frost':
+    case 'Widespread Frost':
+    case 'Areas Of Frost':
+      return 'fa-snowflake';
     default:
       console.warn('Unknown forecast: ', forecast);
       return null;

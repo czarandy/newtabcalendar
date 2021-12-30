@@ -1,9 +1,10 @@
-import {DateTime} from 'luxon';
 import {useCallback, useState} from 'react';
-import fetchFromGoogle from './fetchFromGoogle';
-import useCachedData from './useCachedData';
+
 import {Calendar} from './useCalendars';
+import {DateTime} from 'luxon';
+import fetchFromGoogle from './fetchFromGoogle';
 import hash from 'object-hash';
+import useCachedData from './useCachedData';
 
 export type Event = {
   id: string;
@@ -27,7 +28,9 @@ function parseEvent(event: any): Event | null {
     calendarID: event.calendarID,
     backgroundColor: event.backgroundColor,
     start: DateTime.fromISO(event.start.dateTime ?? event.start.date),
-    end: DateTime.fromISO(event.end.dateTime ?? event.end.date),
+    end: DateTime.fromISO(event.end.dateTime ?? event.end.date).plus({
+      days: isAllDay ? -1 : 0,
+    }),
     description: event.description,
     summary: event.summary,
     url: event.htmlLink,

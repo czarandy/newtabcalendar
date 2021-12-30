@@ -1,10 +1,11 @@
 import {DateTime, Info} from 'luxon';
-import React from 'react';
-import styled from 'styled-components';
-import EventPopover from './EventPopover';
-import useDateTime from './useDateTime';
+
 import type {Event} from './useEvents';
+import EventPopover from './EventPopover';
+import React from 'react';
 import Tippy from '@tippyjs/react';
+import styled from 'styled-components';
+import useDateTime from './useDateTime';
 
 const Wrapper = styled.div`
   display: grid;
@@ -55,17 +56,21 @@ export default function WeeklyCalendar({
   selectedTime: DateTime;
   setSelectedTime: (dt: DateTime) => unknown;
 }): React.ReactElement {
-  const now = useDateTime();
   return (
     <Wrapper>
       {DAYS.map((day, idx) => {
+        const relativeDay = selectedTime.plus({
+          days: idx - selectedTime.weekday + 1,
+        });
         const dayEvents = events.filter(
-          event => event.start.weekday === idx + 1,
+          event =>
+            event.start.hasSame(relativeDay, 'day') ||
+            event.end.hasSame(relativeDay, 'day'),
         );
         const allDayEvents = dayEvents.filter(e => e.isAllDay);
         const regularEvents = dayEvents.filter(e => !e.isAllDay);
         return (
-          <Day key={day} isSelected={now.weekday === idx + 1}>
+          <Day key={day} isSelected={selectedTime.weekday === idx + 1}>
             <DayHeader>{day}</DayHeader>
             {allDayEvents.length > 0 ? (
               <>
