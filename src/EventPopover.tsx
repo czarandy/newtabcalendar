@@ -54,6 +54,7 @@ export default function EventPopover({
   event: Event;
 }): React.ReactElement {
   const description = event.description;
+  const location = event.location;
   return (
     <Wrapper>
       <Title>
@@ -64,6 +65,11 @@ export default function EventPopover({
         {' - '}
         {event.end.toLocaleString({timeStyle: 'short'})}
       </Time>
+      {location !== '' ? (
+        <Description>
+          <Linkify>{location}</Linkify>
+        </Description>
+     ) : null}
       {description !== '' ? (
         <Description>
           <Linkify>{description}</Linkify>

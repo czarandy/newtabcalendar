@@ -85,7 +85,7 @@ function _packEvents(columns: any[]): any {
     col.forEach((event: any) => {
       events.push(
         <EventElement
-          key={event.id}
+          key={`${event.id}-${event.calendarID}`}
           event={event}
           isFullDay={false}
           top={(row / columns.length) * 75 + (row > 0 ? 1 : 0)}

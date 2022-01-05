@@ -14,6 +14,7 @@ export type Event = {
   end: DateTime;
   summary: string;
   description: string;
+  location: string;
   url: string;
   isAllDay: boolean;
 };
@@ -27,6 +28,7 @@ function parseEvent(event: any): Event | null {
     id: event.id,
     calendarID: event.calendarID,
     backgroundColor: event.backgroundColor,
+    location: event.location ?? '',
     start: DateTime.fromISO(event.start.dateTime ?? event.start.date),
     end: DateTime.fromISO(event.end.dateTime ?? event.end.date).plus({
       days: isAllDay ? -1 : 0,
