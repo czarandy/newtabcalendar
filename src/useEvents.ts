@@ -17,6 +17,11 @@ export type Event = {
   location: string;
   url: string;
   isAllDay: boolean;
+  conferenceData?: {
+    name: string;
+    iconURL: string;
+    url: string;
+  };
 };
 
 function parseEvent(event: any): Event | null {
@@ -24,6 +29,19 @@ function parseEvent(event: any): Event | null {
     return null;
   }
   const isAllDay = event.start.date != null;
+  let {conferenceData} = event;
+  if (conferenceData) {
+    const name = conferenceData.conferenceSolution?.name;
+    const iconURL = conferenceData.conferenceSolution?.iconUri;
+    const url = conferenceData.entryPoints?.[0].uri;
+    if (name && iconURL && url) {
+      conferenceData = {
+        name,
+        url,
+        iconURL,
+      };
+    }
+  }
   return {
     id: event.id,
     calendarID: event.calendarID,
@@ -33,10 +51,11 @@ function parseEvent(event: any): Event | null {
     end: DateTime.fromISO(event.end.dateTime ?? event.end.date).plus({
       days: isAllDay ? -1 : 0,
     }),
-    description: event.description,
+    description: event.description ?? '',
     summary: event.summary,
     url: event.htmlLink,
     isAllDay,
+    conferenceData,
   };
 }
 

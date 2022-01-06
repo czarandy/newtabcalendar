@@ -13,6 +13,8 @@ const Button = styled.button`
   border-radius: 4px;
   font-family: system-ui, sans-serif;
   line-height: 1;
+  display: flex;
+  align-items: center;
 `;
 
 export default Button;

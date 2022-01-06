@@ -48,13 +48,36 @@ const TitleLink = styled.a`
   color: var(--primary-color);
 `;
 
+const ConferenceImage = styled.img`
+  height: 24px;
+  margin-right: 8px;
+`;
+
+const ConferenceButton = styled.a`
+  cursor: pointer;
+  background-color: var(--highlight-background);
+  opacity: 0.8;
+  text-decoration: none;
+  &:hover {
+    opacity: 1;
+  }
+  color: var(--primary-color);
+  padding: 8px 8px 9px;
+  border-radius: 4px;
+  font-family: system-ui, sans-serif;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+`;
+
 export default function EventPopover({
   event,
 }: {
   event: Event;
 }): React.ReactElement {
-  const description = event.description;
-  const location = event.location;
+  const {conferenceData, location, description} = event;
   return (
     <Wrapper>
       <Title>
@@ -69,11 +92,17 @@ export default function EventPopover({
         <Description>
           <Linkify>{location}</Linkify>
         </Description>
-     ) : null}
+      ) : null}
       {description !== '' ? (
         <Description>
           <Linkify>{description}</Linkify>
         </Description>
+      ) : null}
+      {conferenceData != null ? (
+        <ConferenceButton bg="filled" href={conferenceData.url}>
+          <ConferenceImage src={conferenceData.iconURL} />
+          {conferenceData.name}
+        </ConferenceButton>
       ) : null}
     </Wrapper>
   );
