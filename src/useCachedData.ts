@@ -1,5 +1,5 @@
 import {DateTime} from 'luxon';
-import {useEffect, useRef, useState} from 'react';
+import {useEffect, useState} from 'react';
 import useDateTime from './useDateTime';
 
 function setLocalStorage(key: string, value: any): Promise<void> {

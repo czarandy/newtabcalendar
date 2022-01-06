@@ -99,7 +99,7 @@ export default function EventPopover({
         </Description>
       ) : null}
       {conferenceData != null ? (
-        <ConferenceButton bg="filled" href={conferenceData.url}>
+        <ConferenceButton href={conferenceData.url}>
           <ConferenceImage src={conferenceData.iconURL} />
           {conferenceData.name}
         </ConferenceButton>
