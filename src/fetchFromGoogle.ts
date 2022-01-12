@@ -1,16 +1,17 @@
 export default function fetchFromGoogle(
   token: string,
   path: string,
-  params: URLSearchParams,
+  params?: URLSearchParams,
 ): Promise<any> {
-  return fetch(
-    'https://www.googleapis.com/calendar/v3/' + path + '?' + params,
-    {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
+  let url = 'https://www.googleapis.com/calendar/v3/' + path;
+  if (params) {
+    url += '?' + params;
+  }
+  return fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     },
-  ).then(response => response.json());
+  }).then(response => response.json());
 }

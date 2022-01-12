@@ -13,15 +13,15 @@ async function fetchColors(token: string): Promise<Map<string, Color>> {
 }
 
 export default function useColors(token: string | null): Map<string, Color> {
-  const fetch = useCallback((): Promise<Calendar[]> => {
+  const fetch = useCallback((): any => {
     if (token != null) {
       return fetchColors(token);
     }
-    return Promise.resolve(new Map());
+    return Promise.resolve({});
   }, [token]);
-  const data = useCachedData(
+  const data: any = useCachedData(
     'colors/gcal/v3/' + hash({token}),
-    [],
+    {},
     fetch,
     86400 * 7,
   );
