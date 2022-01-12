@@ -5,6 +5,7 @@ import {DateTime} from 'luxon';
 import fetchFromGoogle from './fetchFromGoogle';
 import hash from 'object-hash';
 import useCachedData from './useCachedData';
+import useColors, {Color} from './useColors';
 
 export type Event = {
   id: string;
@@ -17,6 +18,7 @@ export type Event = {
   location: string;
   url: string;
   isAllDay: boolean;
+  colorID?: string;
   conferenceData?: {
     name: string;
     iconURL: string;
@@ -24,7 +26,7 @@ export type Event = {
   };
 };
 
-function parseEvent(event: any): Event | null {
+function parseEvent(event: any, colors: Map<string, Color>): Event | null {
   if (event.status === 'cancelled' || !event.start || !event.end) {
     return null;
   }
@@ -45,7 +47,9 @@ function parseEvent(event: any): Event | null {
   return {
     id: event.id,
     calendarID: event.calendarID,
-    backgroundColor: event.backgroundColor,
+    backgroundColor:
+      (event.colorId ? colors.get(event.colorId)?.background : null) ??
+      event.backgroundColor,
     location: event.location ?? '',
     start: DateTime.fromISO(event.start.dateTime ?? event.start.date),
     end: DateTime.fromISO(event.end.dateTime ?? event.end.date).plus({
@@ -56,6 +60,7 @@ function parseEvent(event: any): Event | null {
     url: event.htmlLink,
     isAllDay,
     conferenceData,
+    colorID: event.colorId,
   };
 }
 
@@ -81,6 +86,7 @@ export default function useEvents(
   calendars: Calendar[],
   selectedTime: DateTime,
 ): Event[] {
+  const colors = useColors(token);
   const fetch = useCallback((): Promise<Event[]> => {
     if (token != null) {
       return Promise.all(
@@ -103,7 +109,7 @@ export default function useEvents(
     return Promise.resolve([]);
   }, [token, calendars, selectedTime]);
   const data = useCachedData(
-    'events/gcal/v5/' +
+    'events/gcal/v7/' +
       hash({
         st: selectedTime.startOf('day').toMillis(),
         calendars: calendars.map(cal => cal.id),
@@ -113,7 +119,7 @@ export default function useEvents(
     fetch,
   );
   return data
-    .map(parseEvent)
+    .map(e => parseEvent(e, colors))
     .filter((x): x is Event => x != null)
     .sort((a, b) => a.start.toMillis() - b.start.toMillis());
 }

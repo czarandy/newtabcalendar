@@ -47,6 +47,15 @@ const UpNextWrapper = styled.div`
   justify-content: center;
 `;
 
+// Cleanup storage on load
+async function cleanup() {
+  const bytesInUse = await chrome.storage.local.getBytesInUse();
+  if (bytesInUse > 0.75 * chrome.storage.local.QUOTA_BYTES) {
+    await chrome.storage.local.clear();
+  }
+}
+cleanup();
+
 export default function App(): React.ReactElement {
   const now = useDateTime();
   return (
