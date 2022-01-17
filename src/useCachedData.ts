@@ -3,7 +3,6 @@ import {useEffect, useState} from 'react';
 import useDateTime from './useDateTime';
 
 function setLocalStorage(key: string, value: any): Promise<void> {
-  console.log(key, JSON.stringify(value).length);
   return new Promise(resolve =>
     chrome.storage.local.set({[key]: value}, resolve),
   );
