@@ -1,4 +1,3 @@
-import Tippy from '@tippyjs/react';
 import styled from 'styled-components';
 import {Event} from './useEvents';
 import Linkify from 'react-linkify';

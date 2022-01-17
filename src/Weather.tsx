@@ -85,6 +85,7 @@ function getIcon(forecast: string, isNight: boolean): string | null {
     case 'Light Rain':
     case 'Chance Light Rain':
     case 'Slight Chance Light Rain':
+    case 'Isolated Rain Showers':
       return isNight ? 'fa-cloud-moon-rain' : 'fa-cloud-sun-rain';
     case 'Showers And Thunderstorms':
     case 'Showers And Thunderstorms Likely':
