@@ -32,6 +32,7 @@ const WeatherDaysWrapper = styled.div`
   display: grid;
   grid-auto-flow: column;
   grid-column-gap: 32px;
+  color: var(--primary-color);
 `;
 
 const WeatherDay = styled.div`

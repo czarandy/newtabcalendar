@@ -1,6 +1,6 @@
 {
   "name": "new-tab-calendar",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "dependencies": {
     "@tippyjs/react": "^4.2.6",

@@ -53,6 +53,7 @@ body {
     --border-color: #5b5e61;
     --primary-text-shadow: 0 0 3px #0002, 0 0 12px #0004;
     --secondary-text-shadow: 0 0 3px #0004;
+    background-image: url(./bg-dark.jpg);
   }
 }
 
