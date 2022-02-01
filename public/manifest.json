@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "New Tab Calendar",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "minimum_chrome_version": "96",
   "description": "Customized the new tab experience to show a calendar",
   "chrome_url_overrides": {"newtab": "index.html"},
@@ -16,5 +16,5 @@
     "client_id": "464344344205-hq5p3tbfp5dt9dol12e6a9v2b3mm2eh8.apps.googleusercontent.com",
     "scopes": ["https://www.googleapis.com/auth/calendar.readonly"]
   },
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA19eu89U3UtyPgMkSqZjd0pecrXzKmxao0OkKQRJNR0ujz2is+f3GhJpG8Ixksayd4rkton5KgAoHu/tay3/FsqTzVbYQw4Qp0c5hRWy/THAr0FSTiMVIkfwJPagpSdRyOwRCh+X3PvHDpebN/T5XZdmEYxG7BJlhBZtlMw6aZJWOGYoeFSbFvu8w+w2+qv749nogrEio2Q4O086vnopRAdbGt3UR1/Ea3jr0KeOAcKPka+YRg1ufgTbDYi5N0KCNP0bjOFhh3Nd99MlBwGnVC4TPu8fEyd5b3iRzyPrKzZUflpDMKO4+SSi8qgDUTEk47dKegH4Rwnu0xQd32t7pNQIDAQAB"
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqc47qFq1BGXbZaZ2jrvwd4McwJ8WaAr1Ez1ZFf++kZ4vePJ5meZ78Qlb4SgEUKoPIwrdW0UrnZ1GU4TLWu2m8bYnGluZCs5jR44TIkyaBETi4YWwMd6oq40A3+LetZquTPcLy38binIQA55C9fW33OEBdahIZROs3E/EGyQJ+muVK56LuuryhKfNAZAvSCB3EaeqeRlDwM9r0CCXSkAxlD0m9WwQlQstNEgV/KV1Ciab5mhiz6OZADpi1lUth8pqcA5saoG6N0XF8YdcjSgUj6CZ8r+htkPA0NW13DfNPyIVruiE+7P9lSYgj+1J8fERqYQX3fthYrMY/ILzYqChvwIDAQAB"
 }

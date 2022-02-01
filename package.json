@@ -1,6 +1,6 @@
 {
   "name": "new-tab-calendar",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "dependencies": {
     "@tippyjs/react": "^4.2.6",
@@ -40,6 +40,7 @@
     "@types/react-linkify": "^1.0.1",
     "@types/styled-components": "^5.1.16",
     "cra-build-watch": "^3.4.0",
+    "eslint-config-prettier": "^8.3.0",
     "prettier": "^2.5.0",
     "typescript": "^4.5.2"
   }

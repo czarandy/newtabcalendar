@@ -14,7 +14,7 @@ async function fetchCalendars(token: string): Promise<Calendar[]> {
     token,
     'users/me/calendarList',
     new URLSearchParams(),
-  ).then(data => data.items);
+  ).then(data => data.items ?? []);
 }
 
 export default function useCalendars(token: string | null): Calendar[] {

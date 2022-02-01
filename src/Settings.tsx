@@ -162,7 +162,9 @@ export default function Settings(): React.ReactElement {
           </SettingsMenu>
         }>
         <Wrapper>
-          <IconButton className="fas fa-cog" onClick={() => setIsOpen(true)} />
+          <IconButton className="fas fa-cog" onClick={() => {
+            setIsOpen(oldIsOpen => !oldIsOpen);
+          }} />
         </Wrapper>
       </Tippy>
     </Tippy>
